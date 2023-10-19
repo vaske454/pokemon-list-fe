@@ -1,7 +1,6 @@
 # Laravel Breeze - Next.js Edition 🏝️
 
 ## Get Started
-```
 
 Clone this repository and install its dependencies with `yarn install` or `npm install`. Then, copy the `.env.example` file to `.env.local` and supply the URL of your backend:
 
