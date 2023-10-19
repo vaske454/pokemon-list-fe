@@ -14,84 +14,89 @@ export default function Home() {
 
     // Calculate the offset for the current page
     const offset = (currentPage - 1) * perPage
-    const clickForm = newPage => {
-        // eslint-disable-next-line no-console
-        console.log(newPage)
-
-        setCurrentPage(newPage)
-
-        // Change the URL by adding the "paged" parameter
-        window.location.href = window.location.pathname + `?paged=${newPage}`
-    }
-
     return (
         <>
             <Head>
                 <title>Pokemon List</title>
             </Head>
 
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {pokemonList?.pokemons
                     .slice(offset, offset + perPage)
                     .map(pokemon => (
-                        // eslint-disable-next-line react/jsx-key
-                        <div key={pokemon.id}>
-                            <h2>{pokemon.name}</h2>
-                            <p>ID: {pokemon.id}</p>
-                            <p>Height: {pokemon.height}</p>
-                            <p>Weight: {pokemon.weight}</p>
+                        <div
+                            key={pokemon.id}
+                            className="border p-4 rounded shadow-md">
+                            <h2 className="text-xl font-semibold mb-2">
+                                {pokemon.name}
+                            </h2>
+                            <p className="mb-2">ID: {pokemon.id}</p>
+                            <p className="mb-2">Height: {pokemon.height}</p>
+                            <p className="mb-2">Weight: {pokemon.weight}</p>
                             <img
                                 src={pokemon.image}
-                                alt={pokemon.name + '.png'}
+                                alt={`${pokemon.name}.png`}
+                                className="mx-auto my-2"
                             />
-                            {JSON.parse(pokemon.types).map(type => (
-                                <p key={type.type.name}>{type.type.name}</p>
-                            ))}
+                            <div className="space-x-2">
+                                {JSON.parse(pokemon.types).map(type => (
+                                    <p
+                                        key={type.type.name}
+                                        className="px-2 py-1 text-xs bg-blue-200 rounded">
+                                        {type.type.name}
+                                    </p>
+                                ))}
+                            </div>
                         </div>
                     ))}
             </div>
 
             <div className="pagination">
-                <button
-                    onClick={() => {
-                        const url = new URL(window.location.href)
-                        const paged =
-                            parseInt(url.searchParams.get('paged'), 10) || 1
-                        if (paged > 1) {
-                            url.searchParams.set(
-                                'paged',
-                                (paged - 1).toString(),
-                            )
-                            window.location.href = url.toString()
-                        }
-                    }}>
-                    Previous
-                </button>
-
-                {Array.from({ length: totalPages }, (_, index) => (
+                <div className="flex justify-center my-4">
                     <button
-                        key={index}
-                        onClick={() => clickForm(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}>
-                        {index + 1}
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer"
+                        onClick={() => {
+                            const url = new URL(window.location.href)
+                            const paged =
+                                parseInt(url.searchParams.get('paged'), 10) || 1
+                            if (paged > 1) {
+                                url.searchParams.set(
+                                    'paged',
+                                    (paged - 1).toString(),
+                                )
+                                window.location.href = url.toString()
+                            }
+                        }}>
+                        Previous
                     </button>
-                ))}
 
-                <button
-                    onClick={() => {
-                        const url = new URL(window.location.href)
-                        const paged =
-                            parseInt(url.searchParams.get('paged'), 10) || 1
-                        if (paged < totalPages) {
-                            url.searchParams.set(
-                                'paged',
-                                (paged + 1).toString(),
-                            )
-                            window.location.href = url.toString()
-                        }
-                    }}>
-                    Next
-                </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <a
+                            className={`px-4 py-2 bg-gray-200 rounded cursor-pointer`}
+                            key={index}
+                            href={`/?paged=${index + 1}`}
+                            onClick={() => setCurrentPage(index + 1)}>
+                            {index + 1}
+                        </a>
+                    ))}
+
+                    <button
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer"
+                        onClick={() => {
+                            const url = new URL(window.location.href)
+                            const paged =
+                                parseInt(url.searchParams.get('paged'), 10) || 1
+                            if (paged < totalPages) {
+                                url.searchParams.set(
+                                    'paged',
+                                    (paged + 1).toString(),
+                                )
+                                window.location.href = url.toString()
+                            }
+                        }}>
+                        Next
+                    </button>
+                </div>
             </div>
         </>
     )
