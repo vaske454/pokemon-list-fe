@@ -1,4 +1,4 @@
-# Laravel Breeze - Next.js Edition 🏝️
+# Pokemon List - Next.js
 
 ## Get Started
 
