@@ -13,7 +13,6 @@ Run the application via `npm run dev`. The application will be available at `htt
 ```
 npm run dev
 ```
-
 ## Usage
 
 Once you've set up the project, you can access it in your web browser at [http://localhost:3000].
