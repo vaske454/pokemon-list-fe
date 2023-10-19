@@ -68,7 +68,9 @@ export default function Home() {
                             ))}
                     </div>
                 ) : (
-                    <p>There are no Pokémon available.</p>
+                    <h1 className="text-3xl text-center p-4 bg-yellow-200 rounded-lg">
+                        There are no Pokémon available.
+                    </h1>
                 )}
                 {pokemonList?.total > 0 && (
                     <div className="pagination">
