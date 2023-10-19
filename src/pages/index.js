@@ -41,50 +41,79 @@ export default function Home() {
 
             <main className="p-8">
                 {pokemonList?.total > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         {pokemonList?.pokemons
                             .slice(offset, offset + perPage)
                             .map(pokemon => (
                                 <article
                                     key={pokemon.id}
                                     className="border p-4 rounded shadow-md">
-                                    <h2 className="text-xl font-semibold mb-2">
+                                    <h2 className="text-center text-xl my-4 border-b border-solid border-black">
                                         {pokemon.name}
                                     </h2>
-                                    <p className="mb-2">ID: {pokemon.id}</p>
-                                    <p className="mb-2">
-                                        Height: {pokemon.height}
+                                    <table>
+                                        <thead>
+                                            <th className="text-sm">
+                                                Property
+                                            </th>
+                                            <th className="text-sm">Value</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td className="text-gray-500">
+                                                    ID:
+                                                </td>
+                                                <td className="mb-2">
+                                                    {pokemon.id}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-gray-500">
+                                                    Height:
+                                                </td>
+                                                <td className="mb-2">
+                                                    {pokemon.height}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="text-gray-500">
+                                                    Weight:
+                                                </td>
+                                                <td className="mb-2">
+                                                    {pokemon.weight}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>
+                                        <img
+                                            src={pokemon.image}
+                                            alt={`${pokemon.name}.png`}
+                                            className="mx-auto my-2"
+                                        />
                                     </p>
-                                    <p className="mb-2">
-                                        Weight: {pokemon.weight}
-                                    </p>
-                                    <img
-                                        src={pokemon.image}
-                                        alt={`${pokemon.name}.png`}
-                                        className="mx-auto my-2"
-                                    />
-                                    <div className="space-x-2 flex">
+                                    <ul className="space-x-2 flex">
                                         {JSON.parse(pokemon.types).map(type => (
-                                            <p
+                                            <li
                                                 key={type.type.name}
                                                 className="px-2 py-1 text-xs bg-blue-200 rounded">
                                                 {type.type.name}
-                                            </p>
+                                            </li>
                                         ))}
-                                    </div>
+                                    </ul>
                                 </article>
                             ))}
-                    </div>
+                    </section>
                 ) : (
-                    <h1 className="text-3xl text-center p-4 bg-yellow-200 rounded-lg">
+                    <h2 className="text-3xl text-center p-4 bg-yellow-200 rounded-lg">
                         There are no Pokémon available.
-                    </h1>
+                    </h2>
                 )}
             </main>
-            <footer className="flex justify-center my-4">
+            <footer>
                 {pokemonList?.total > 0 && (
-                    <ul className="pagination">
-                        <div className="flex justify-center my-4">
+                    <ul className="pagination flex justify-center my-4">
+                        <li>
                             <button
                                 className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer ${
                                     pageNumber <= 1 ? 'hidden' : ''
@@ -106,25 +135,25 @@ export default function Home() {
                                 }}>
                                 Previous
                             </button>
+                        </li>
 
-                            {Array.from({ length: totalPages }, (_, index) => (
-                                <li
-                                    className={`px-4 py-2 ${
-                                        pageNumber === index + 1
-                                            ? 'bg-blue-500 text-white font-bold'
-                                            : 'bg-gray-200'
-                                    } rounded cursor-pointer`}
-                                    key={index}>
-                                    <a
-                                        href={`/?paged=${index + 1}`}
-                                        onClick={() =>
-                                            handlePageChange(index + 1)
-                                        }>
-                                        {index + 1}
-                                    </a>
-                                </li>
-                            ))}
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li
+                                className={`px-4 py-2 ${
+                                    pageNumber === index + 1
+                                        ? 'bg-blue-500 text-white font-bold'
+                                        : 'bg-gray-200'
+                                } rounded cursor-pointer`}
+                                key={index}>
+                                <a
+                                    href={`/?paged=${index + 1}`}
+                                    onClick={() => handlePageChange(index + 1)}>
+                                    {index + 1}
+                                </a>
+                            </li>
+                        ))}
 
+                        <li>
                             <button
                                 className={`bg-blue-500 hover-bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer ${
                                     pageNumber >= totalPages ? 'hidden' : ''
@@ -146,7 +175,7 @@ export default function Home() {
                                 }}>
                                 Next
                             </button>
-                        </div>
+                        </li>
                     </ul>
                 )}
             </footer>
