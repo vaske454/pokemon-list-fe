@@ -23,7 +23,10 @@ export default function Home() {
         router.push(`/?paged=${newPage}`)
     }
     // eslint-disable-next-line no-console
-    const pageNumber = parseInt(paged, 10)
+    let pageNumber = parseInt(paged, 10)
+    if (isNaN(pageNumber)) {
+        pageNumber = 1
+    }
 
     return (
         <>
