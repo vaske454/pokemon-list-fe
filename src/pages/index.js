@@ -7,7 +7,7 @@ export default function Home() {
     const { pokemonList } = usePokemonList()
     const perPage = 20
 
-    // Number of pages based on total number of Pokémon and number of Pokémon per page
+    // Number of pages based on the total number of Pokémon and the number of Pokémon per page
     const totalPages = Math.ceil(pokemonList?.total / perPage)
     const router = useRouter()
     const { paged } = router.query
@@ -33,14 +33,19 @@ export default function Home() {
             <Head>
                 <title>Pokemon List</title>
             </Head>
+            <header>
+                <h1 className="text-3xl text-center p-4 rounded-lg">
+                    Pokemon List
+                </h1>
+            </header>
 
-            <div>
+            <main className="p-8">
                 {pokemonList?.total > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         {pokemonList?.pokemons
                             .slice(offset, offset + perPage)
                             .map(pokemon => (
-                                <div
+                                <article
                                     key={pokemon.id}
                                     className="border p-4 rounded shadow-md">
                                     <h2 className="text-xl font-semibold mb-2">
@@ -58,7 +63,7 @@ export default function Home() {
                                         alt={`${pokemon.name}.png`}
                                         className="mx-auto my-2"
                                     />
-                                    <div className="space-x-2">
+                                    <div className="space-x-2 flex">
                                         {JSON.parse(pokemon.types).map(type => (
                                             <p
                                                 key={type.type.name}
@@ -67,7 +72,7 @@ export default function Home() {
                                             </p>
                                         ))}
                                     </div>
-                                </div>
+                                </article>
                             ))}
                     </div>
                 ) : (
@@ -75,11 +80,15 @@ export default function Home() {
                         There are no Pokémon available.
                     </h1>
                 )}
+            </main>
+            <footer className="flex justify-center my-4">
                 {pokemonList?.total > 0 && (
-                    <div className="pagination">
+                    <ul className="pagination">
                         <div className="flex justify-center my-4">
                             <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer"
+                                className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer ${
+                                    pageNumber <= 1 ? 'hidden' : ''
+                                }`}
                                 onClick={() => {
                                     const url = new URL(window.location.href)
                                     const paged =
@@ -94,35 +103,32 @@ export default function Home() {
                                         )
                                         window.location.href = url.toString()
                                     }
-                                }}
-                                style={{
-                                    display: pageNumber > 1 ? 'block' : 'none',
                                 }}>
                                 Previous
                             </button>
 
                             {Array.from({ length: totalPages }, (_, index) => (
-                                <a
-                                    key={index}
-                                    href={`/?paged=${index + 1}`}
-                                    onClick={() => handlePageChange(index + 1)}
+                                <li
                                     className={`px-4 py-2 ${
                                         pageNumber === index + 1
                                             ? 'bg-blue-500 text-white font-bold'
                                             : 'bg-gray-200'
-                                    } rounded cursor-pointer`}>
-                                    {index + 1}
-                                </a>
+                                    } rounded cursor-pointer`}
+                                    key={index}>
+                                    <a
+                                        href={`/?paged=${index + 1}`}
+                                        onClick={() =>
+                                            handlePageChange(index + 1)
+                                        }>
+                                        {index + 1}
+                                    </a>
+                                </li>
                             ))}
 
                             <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer"
-                                style={{
-                                    display:
-                                        pageNumber < totalPages
-                                            ? 'block'
-                                            : 'none',
-                                }}
+                                className={`bg-blue-500 hover-bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer ${
+                                    pageNumber >= totalPages ? 'hidden' : ''
+                                }`}
                                 onClick={() => {
                                     const url = new URL(window.location.href)
                                     const paged =
@@ -141,9 +147,9 @@ export default function Home() {
                                 Next
                             </button>
                         </div>
-                    </div>
+                    </ul>
                 )}
-            </div>
+            </footer>
         </>
     )
 }
