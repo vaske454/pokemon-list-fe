@@ -23,52 +23,46 @@ export default function Home() {
                 <title>Pokemon List</title>
             </Head>
             <header>
-                <h1 className="text-3xl text-center p-4 rounded-lg">
-                    Pokemon List
-                </h1>
+                <h1 className="page-title">Pokemon List</h1>
             </header>
 
-            <main className="p-8">
+            <main className="site-main">
                 {pokemonList?.total > 0 ? (
-                    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <section className="pokemon-list">
                         {pokemonList?.pokemons.map(pokemon => (
-                            <article
-                                key={pokemon.id}
-                                className="border p-4 rounded shadow-md">
-                                <h2 className="text-center text-xl my-4 border-b border-solid border-black">
-                                    {pokemon.name}
-                                </h2>
+                            <article key={pokemon.id} className="pokemon-item">
+                                <h2 className="pokemon-name">{pokemon.name}</h2>
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th className="text-sm">
+                                            <th className="table-header">
                                                 Property
                                             </th>
-                                            <th className="text-sm">Value</th>
+                                            <th className="table-header">
+                                                Value
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td className="text-gray-500">
-                                                ID:
-                                            </td>
-                                            <td className="mb-2">
+                                            <td className="property">ID:</td>
+                                            <td className="value">
                                                 {pokemon.id}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="text-gray-500">
+                                            <td className="property">
                                                 Height:
                                             </td>
-                                            <td className="mb-2">
+                                            <td className="value">
                                                 {pokemon.height}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="text-gray-500">
+                                            <td className="property">
                                                 Weight:
                                             </td>
-                                            <td className="mb-2">
+                                            <td className="value">
                                                 {pokemon.weight}
                                             </td>
                                         </tr>
@@ -78,14 +72,14 @@ export default function Home() {
                                     <img
                                         src={pokemon.image}
                                         alt={`${pokemon.name}.png`}
-                                        className="mx-auto my-2"
+                                        className="pokemon-image"
                                     />
                                 </p>
-                                <ul className="space-x-2 flex">
+                                <ul className="pokemon-types">
                                     {JSON.parse(pokemon.types).map(type => (
                                         <li
                                             key={type.type.name}
-                                            className="px-2 py-1 text-xs bg-blue-200 rounded">
+                                            className="pokemon-type">
                                             {type.type.name}
                                         </li>
                                     ))}
@@ -94,16 +88,16 @@ export default function Home() {
                         ))}
                     </section>
                 ) : (
-                    <h2 className="text-3xl text-center p-4 bg-yellow-200 rounded-lg">
+                    <h2 className="no-pokemon-message">
                         There are no Pokémon available.
                     </h2>
                 )}
             </main>
             <footer>
                 {pokemonList?.total > 0 && (
-                    <ul className="pagination flex justify-center my-4">
+                    <ul className="pagination">
                         <li
-                            className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer ${
+                            className={`previous-btn ${
                                 previousPage < 1 ? 'hidden' : ''
                             }`}>
                             <a href={`/?paged=${previousPage}`}>Previous</a>
@@ -111,11 +105,11 @@ export default function Home() {
 
                         {Array.from({ length: totalPages }, (_, index) => (
                             <li
-                                className={`px-4 py-2 ${
+                                className={`${
                                     currentPage === index + 1
-                                        ? 'bg-blue-500 text-white font-bold'
-                                        : 'bg-gray-200'
-                                } rounded cursor-pointer`}
+                                        ? 'active'
+                                        : 'inactive'
+                                }`}
                                 key={index}>
                                 <a
                                     href={`/?paged=${index + 1}`}
@@ -126,7 +120,7 @@ export default function Home() {
                         ))}
 
                         <li
-                            className={`bg-blue-500 hover-bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer ${
+                            className={`next-btn ${
                                 currentPage >= totalPages ? 'hidden' : ''
                             }`}>
                             <a href={`/?paged=${nextPage}`}>Next</a>

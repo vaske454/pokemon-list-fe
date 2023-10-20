@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .site-main {
+        @apply p-8
+    }
+
+    .page-title {
+        @apply text-3xl text-center p-4 rounded-lg
+    }
+
+    .pokemon-list {
+        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4
+    }
+
+    .pokemon-item {
+        @apply border p-4 rounded shadow-md;
+    }
+
+    .pokemon-name {
+        @apply text-center text-xl my-4 border-b border-solid border-black
+    }
+
+    .table-header {
+        @apply text-sm
+    }
+
+    .property {
+        @apply text-gray-500
+    }
+
+    .value {
+        @apply mb-2
+    }
+
+    .pokemon-image {
+        @apply mx-auto my-2
+    }
+
+    .pokemon-types {
+        @apply space-x-2 flex
+    }
+
+    .pokemon-type {
+        @apply px-2 py-1 text-xs bg-blue-200 rounded
+    }
+
+    .no-pokemon-message {
+        @apply text-3xl text-center p-4 bg-yellow-200 rounded-lg
+    }
+
+    .pagination {
+        @apply flex justify-center my-4
+    }
+
+    .previous-btn {
+        @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer
+    }
+
+    .active {
+        @apply px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer
+    }
+
+    .inactive {
+        @apply px-4 py-2 bg-gray-200 rounded cursor-pointer
+    }
+
+    .next-btn {
+        @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-r cursor-pointer
+    }
+}
