@@ -105,10 +105,8 @@ export default function Home() {
 
                         {Array.from({ length: totalPages }, (_, index) => (
                             <li
-                                className={`${
-                                    currentPage === index + 1
-                                        ? 'active'
-                                        : 'inactive'
+                                className={`page-number ${
+                                    currentPage === index + 1 ? 'active' : ''
                                 }`}
                                 key={index}>
                                 <a

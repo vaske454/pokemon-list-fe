@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer base {
     .site-main {
         @apply p-8
     }
@@ -59,12 +59,12 @@
         @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-l cursor-pointer
     }
 
-    .active {
-        @apply px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer
+    .page-number {
+        @apply px-4 py-2 bg-gray-200 rounded cursor-pointer
     }
 
-    .inactive {
-        @apply px-4 py-2 bg-gray-200 rounded cursor-pointer
+    .active {
+        @apply px-4 py-2 bg-blue-500 text-white font-bold rounded cursor-pointer
     }
 
     .next-btn {
