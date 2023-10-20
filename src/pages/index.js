@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { usePokemonList } from '@/hooks/pokemon'
-import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 export default function Home() {
@@ -13,13 +12,6 @@ export default function Home() {
     // Number of pages based on the total number of Pokémon and the number of Pokémon per page
     const totalPages = Math.ceil(pokemonList?.total / perPage)
     const router = useRouter()
-    const currentPageFromURL = parseInt(currentPage) || 1
-
-    // Local state to track the current page
-    const [currentPageState] = useState(currentPageFromURL)
-
-    // Calculate the offset for the current page
-    const offset = (currentPageState - 1) * perPage
 
     const handlePageChange = newPage => {
         router.push(`/?paged=${newPage}`)
@@ -39,71 +31,67 @@ export default function Home() {
             <main className="p-8">
                 {pokemonList?.total > 0 ? (
                     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                        {pokemonList?.pokemons
-                            .slice(offset, offset + perPage)
-                            .map(pokemon => (
-                                <article
-                                    key={pokemon.id}
-                                    className="border p-4 rounded shadow-md">
-                                    <h2 className="text-center text-xl my-4 border-b border-solid border-black">
-                                        {pokemon.name}
-                                    </h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th className="text-sm">
-                                                    Property
-                                                </th>
-                                                <th className="text-sm">
-                                                    Value
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="text-gray-500">
-                                                    ID:
-                                                </td>
-                                                <td className="mb-2">
-                                                    {pokemon.id}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="text-gray-500">
-                                                    Height:
-                                                </td>
-                                                <td className="mb-2">
-                                                    {pokemon.height}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="text-gray-500">
-                                                    Weight:
-                                                </td>
-                                                <td className="mb-2">
-                                                    {pokemon.weight}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <p>
-                                        <img
-                                            src={pokemon.image}
-                                            alt={`${pokemon.name}.png`}
-                                            className="mx-auto my-2"
-                                        />
-                                    </p>
-                                    <ul className="space-x-2 flex">
-                                        {JSON.parse(pokemon.types).map(type => (
-                                            <li
-                                                key={type.type.name}
-                                                className="px-2 py-1 text-xs bg-blue-200 rounded">
-                                                {type.type.name}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </article>
-                            ))}
+                        {pokemonList?.pokemons.map(pokemon => (
+                            <article
+                                key={pokemon.id}
+                                className="border p-4 rounded shadow-md">
+                                <h2 className="text-center text-xl my-4 border-b border-solid border-black">
+                                    {pokemon.name}
+                                </h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th className="text-sm">
+                                                Property
+                                            </th>
+                                            <th className="text-sm">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td className="text-gray-500">
+                                                ID:
+                                            </td>
+                                            <td className="mb-2">
+                                                {pokemon.id}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-gray-500">
+                                                Height:
+                                            </td>
+                                            <td className="mb-2">
+                                                {pokemon.height}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="text-gray-500">
+                                                Weight:
+                                            </td>
+                                            <td className="mb-2">
+                                                {pokemon.weight}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    <img
+                                        src={pokemon.image}
+                                        alt={`${pokemon.name}.png`}
+                                        className="mx-auto my-2"
+                                    />
+                                </p>
+                                <ul className="space-x-2 flex">
+                                    {JSON.parse(pokemon.types).map(type => (
+                                        <li
+                                            key={type.type.name}
+                                            className="px-2 py-1 text-xs bg-blue-200 rounded">
+                                            {type.type.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </article>
+                        ))}
                     </section>
                 ) : (
                     <h2 className="text-3xl text-center p-4 bg-yellow-200 rounded-lg">
